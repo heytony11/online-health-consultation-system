@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctor Register</title>
+</head>
+
+<body>
+
+<h2>Doctor Registration</h2>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="specialization" placeholder="Specialization"><br><br>
+<input id="experience" placeholder="Experience"><br><br>
+<input id="availability" placeholder="Availability"><br><br>
+<input id="email" placeholder="Email"><br><br>
+<input id="password" placeholder="Password"><br><br>
+
+<button onclick="registerDoctor()">Register</button>
+
+<script>
+
+async function registerDoctor(){
+
+let data = {
+name:document.getElementById("name").value,
+specialization:document.getElementById("specialization").value,
+experience:document.getElementById("experience").value,
+availability:document.getElementById("availability").value,
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+}
+
+let res = await fetch("/api/doctor/register",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+});
+
+let msg = await res.text();
+
+alert(msg);
+
+}
+
+</script>
+
+</body>
+</html>

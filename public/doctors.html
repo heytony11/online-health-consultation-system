@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Doctors</title>
+</head>
+
+<body>
+
+<h2>Available Doctors</h2>
+
+<div id="doctorList"></div>
+
+<script>
+
+async function loadDoctors(){
+
+let res = await fetch("/api/doctors");
+
+let doctors = await res.json();
+
+let html="";
+
+doctors.forEach(d=>{
+
+html += `
+<div>
+
+<h3>${d.name}</h3>
+<p>Specialization: ${d.specialization}</p>
+<p>Experience: ${d.experience}</p>
+
+<button onclick="book('${d._id}')">Book Appointment</button>
+
+<hr>
+
+</div>
+`
+
+})
+
+document.getElementById("doctorList").innerHTML=html;
+
+}
+
+async function book(id){
+
+let patientId="12345"; // demo
+
+let data={
+patientId:patientId,
+doctorId:id,
+date:"2026-03-10",
+message:"Consultation"
+}
+
+let res = await fetch("/api/appointment/book",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+})
+
+let msg = await res.text();
+
+alert(msg);
+
+}
+
+loadDoctors();
+
+</script>
+
+</body>
+</html>

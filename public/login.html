@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+</head>
+
+<body>
+
+<h2>Login</h2>
+
+<input id="email" placeholder="Email"><br><br>
+<input id="password" placeholder="Password"><br><br>
+
+<select id="role">
+<option value="patient">Patient</option>
+<option value="doctor">Doctor</option>
+</select>
+
+<br><br>
+
+<button onclick="login()">Login</button>
+
+<script>
+
+async function login(){
+
+let role = document.getElementById("role").value;
+
+let url="";
+
+if(role=="patient"){
+url="/api/patient/login"
+}
+else{
+url="/api/doctor/login"
+}
+
+let data={
+email:document.getElementById("email").value,
+password:document.getElementById("password").value
+}
+
+let res = await fetch(url,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+})
+
+let msg = await res.text();
+
+alert(msg);
+
+if(msg.includes("Success")){
+window.location="doctors.html"
+}
+
+}
+
+</script>
+
+</body>
+</html>
